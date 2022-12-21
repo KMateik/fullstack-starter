@@ -29,6 +29,7 @@ public class InventoryDAOTest {
   private InventoryDAO inventoryDAO;
   private static final String NAME = "Amber";
   private static final String PRODUCT_TYPE = "hops";
+  private static final String ID = "1454213";
 
   @Before
   public void setup() {
@@ -61,11 +62,11 @@ public class InventoryDAOTest {
     Inventory inventory = new Inventory();
     inventory.setName(NAME);
     inventory.setProductType(PRODUCT_TYPE);
-    inventory.setId("1454213");
+    inventory.setId(ID);
     Inventory created = inventoryDAO.create(inventory);
     List<Inventory> actualInventory = this.inventoryDAO.findAll();
-    Assert.assertEquals(actualInventory.get(0).getName(), "Amber");
-    Assert.assertEquals(actualInventory.get(0).getProductType(), "hops");
-    Assert.assertFalse(actualInventory.get(0).getId().equals("1454213"));
+    Assert.assertEquals(actualInventory.get(0).getName(), NAME);
+    Assert.assertEquals(actualInventory.get(0).getProductType(), PRODUCT_TYPE);
+    Assert.assertNotEquals(actualInventory.get(0).getId(), ID);
   }
 }

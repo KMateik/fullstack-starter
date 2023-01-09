@@ -28,8 +28,8 @@ public class InventoryController {
   }
 
   /**
-   * Find Products.
-   * @return List of Product.
+   * Find Inventory.
+   * @return List of Inventory.
    */
   @GetMapping
   public List<Inventory> findInventories() {

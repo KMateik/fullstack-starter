@@ -86,10 +86,7 @@ public class InventoryDAO {
    */
   public Optional<Inventory> delete(String id) {
     Query query = Query.query(Criteria.where("id").is(id));
-    Inventory inv = this.mongoTemplate.findOne(query, Inventory.class);
-    if (inv != null) {
-      this.mongoTemplate.remove(inv);
-    }
-    return Optional.of(inv);
+    Inventory inv = this.mongoTemplate.findAndRemove(query, Inventory.class);
+    return Optional.ofNullable(inv);
   }
 }

@@ -79,11 +79,14 @@ public class InventoryDAOTest {
     Inventory inventory = new Inventory();
     inventory.setName(NAME);
     inventory.setProductType(PRODUCT_TYPE);
-    Inventory added = this.inventoryDAO.create(inventory);
+    this.mongoTemplate.save(inventory);
     List<Inventory> actualInv = this.inventoryDAO.findAll();
     Assert.assertEquals(actualInv.get(0).getName(), NAME);
     Optional<Inventory> deleted = this.inventoryDAO.delete(actualInv.get(0).getId());
+    Assert.assertTrue(deleted.isPresent());
     actualInv = this.inventoryDAO.findAll();
     Assert.assertTrue(actualInv.isEmpty());
+    deleted = this.inventoryDAO.delete("125A34G");
+    Assert.assertFalse(deleted.isPresent());
   }
 }

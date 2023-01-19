@@ -15,6 +15,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -81,5 +82,19 @@ public class InventoryControllerTest {
 
     Assert.assertEquals("Expected 2, got: " + this.mongoTemplate.findAll(Inventory.class).size() +
       this.mongoTemplate.findAll(Inventory.class), 2, this.mongoTemplate.findAll(Inventory.class).size());
+  }
+  
+  /**
+   * Test remove endpoint.
+   * @throws Throwable see MockMvc
+   */
+  @Test
+  public void remove() throws Throwable {
+    Assert.assertEquals("Expected 1: " + this.mongoTemplate.findAll(Inventory.class),
+       1, this.mongoTemplate.findAll(Inventory.class).size());
+    this.mockMvc.perform(delete("/inventory/{id}", this.inventory.getId()))
+      .andExpect(status().isOk());
+    
+    Assert.assertEquals(0, this.mongoTemplate.findAll(Inventory.class).size());
   }
 }
